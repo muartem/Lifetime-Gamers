@@ -13,7 +13,9 @@ export const Container = styled.div`
   justify-content: space-between;
 	width: 80%;
   padding: 24px 0;
+  
   @media (max-width: 992px) {
+    padding: 24px 5px;
     width: 100%;
   }
 `

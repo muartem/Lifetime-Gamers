@@ -26,7 +26,7 @@ export default class API {
   }
 
   static createItem = async (item) => {
-    const { data } = await this.#api.delete(`/`, item)
+    const { data } = await this.#api.post(`/`, item)
     return data
   }
 

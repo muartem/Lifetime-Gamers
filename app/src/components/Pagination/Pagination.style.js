@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import is from 'styled-is';
 
-export const StyledPagination = styled.header`
+export const StyledPagination = styled.footer`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +27,7 @@ export const Page = styled.span`
   color: rgba(38, 51, 74, 0.6);
 `
 
-export const Controls = styled.div`
+export const Controls = styled.nav`
   display: flex;
   flex-direction: row;
   align-items: center;

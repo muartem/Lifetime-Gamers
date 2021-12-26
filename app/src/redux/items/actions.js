@@ -23,6 +23,28 @@ export const getItems = (start) => (
     }
 )
 
+export const createItem = (item) => (
+  async dispatch => {
+    dispatch({ type: Constants.ITEMS_REQUEST })
+    try {
+      await API.createItem(item)
+      dispatch(
+        {
+          type: Constants.ITEMS_CREATE_SUCCESS,
+          payload: item
+        }
+      )
+    } catch (error) {
+      dispatch(
+        {
+          type: Constants.ITEMS_FAILURE,
+          payload: error
+        }
+      )
+    }
+  }
+)
+
 export const renameItem = (id, title) => (
     async dispatch => {
       dispatch({ type: Constants.ITEMS_REQUEST })
@@ -31,7 +53,7 @@ export const renameItem = (id, title) => (
         dispatch(
           {
             type: Constants.ITEMS_RENAME_SUCCESS,
-            payload: title
+            payload: { id, title }
           }
         )
       } catch (error) {
@@ -53,7 +75,7 @@ export const completeItem = (id, completed) => (
       dispatch(
         {
           type: Constants.ITEMS_COMPLETE_SUCCESS,
-          payload: completed
+          payload: { id, completed }
         }
       )
     } catch (error) {

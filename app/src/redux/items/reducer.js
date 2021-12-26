@@ -9,7 +9,7 @@ export const INITIAL_STATE = {
 
 
 const handlers = {
-    [Constants.ITEMS_FETCH_REQUEST]: R.assoc('isLoading', true),
+    [Constants.ITEMS_REQUEST]: R.assoc('isLoading', true),
 
     [Constants.ITEMS_FETCH_SUCCESS]: (_, { payload }) => ({
         data: payload,
@@ -17,17 +17,38 @@ const handlers = {
         isLoading: false,
     }),
 
-    [Constants.ITEMS_FETCH_FAILURE]: (_, { payload }) => ({
+    [Constants.ITEMS_FAILURE]: (_, { payload }) => ({
         data: null,
         error: payload,
         isLoading: false,
     }),
 
-    [Constants.ITEMS_RENAME_SUCCESS]: (state, { payload }) => R.assoc('data', payload, state),
+    [Constants.ITEMS_CREATE_SUCCESS]: (state, { payload }) => ({
+        ...state,
+        data: [
+            payload,
+            ...state.data,
+        ],
+    }),
 
-    [Constants.ITEMS_COMPLETE_SUCCESS]: (state, { payload }) => R.assoc('data', payload, state),
+    [Constants.ITEMS_RENAME_SUCCESS]: (state, { payload }) => ({
+        ...state,
+        data: [
+            ...state.data.map((item) => (item.id === payload.id ? { ...item, title: payload.title } : item)),
+        ],
+    }),
 
-    [Constants.ITEMS_DELETE_SUCCESS]: (state, { payload }) => R.assoc('data', payload, state),
+    [Constants.ITEMS_COMPLETE_SUCCESS]: (state, { payload }) => ({
+        ...state,
+        data: [
+            ...state.data.map((item) => (item.id === payload.id ? { ...item, completed: payload.completed } : item)),
+        ],
+    }),
+
+    [Constants.ITEMS_DELETE_SUCCESS]:(state, { payload }) => ({
+        ...state,
+        data: [...state.data.filter((item) => item.id !== payload)],
+    }),
 
     DEFAULT: (state) => state
 };
